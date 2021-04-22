@@ -86,8 +86,8 @@ Notes:
         this.frameClass = frameClass
     }
 ```
-    - I ran into issues when trying to call new frameClass() on the spy. Which was fixed by using Jasmine.createSpy(frame) - however the issue with this is that I could not set any methods for the spy and when I tried using jasmine.createSpyObj(frame, ['methods']) this spy would not respond to the new method.
-    - I then ran into issues when attempting to get the currentFrame as it seemed that Jasmine's .toEqual matcher could not tell the difference between the first frameSpy and the second frameSpy. I tried setting up a method to mock whether a frame is complete.
+I ran into issues when trying to call new frameClass() on the spy. Which was fixed by using Jasmine.createSpy(frame) - however the issue with this is that I could not set any methods for the spy and when I tried using jasmine.createSpyObj(frame, ['methods']) this spy would not respond to the new method.
+I then ran into issues when attempting to get the currentFrame as it seemed that Jasmine's .toEqual matcher could not tell the difference between the first frameSpy and the second frameSpy. I tried setting up a method to mock whether a frame is complete.
 ```
     frameSpy = {
         this.complete = false,
@@ -96,5 +96,5 @@ Notes:
         }
     }
 ```
-    - However when attempting to set the first frameSpy to true, it would set the value of all the frameSpies to true.
-    - It appears the easiest solution was to create 10 different frame spies, this way Jasmine's .toEqual mathcher can tell the difference between 2 spy object (even if their methods are the same)
+However when attempting to set the first frameSpy to true, it would set the value of all the frameSpies to true.
+It appears the easiest solution was to create 10 different frame spies, this way Jasmine's .toEqual mathcher can tell the difference between 2 spy object (even if their methods are the same)
