@@ -3,9 +3,6 @@ class Game {
     constructor(){
         this.NUMBER_OF_FRAMES = 10;
         this.all_frames = [];
-    }
-
-    start(){
         this._setUpFrames();
     }
 
@@ -13,14 +10,14 @@ class Game {
         return this.all_frames;
     }
 
-    _createFrame(){
-        return new Frame();
+    currentFrame(){
+        return this.all_frames.find(frame => frame.isComplete() == false)
     }
 
     _setUpFrames(){
         var i = 0;
          do {
-             this.all_frames.push(this._createFrame());
+             this.all_frames.push(new Frame());
              i++;
          } while (i < this.NUMBER_OF_FRAMES);
     }
