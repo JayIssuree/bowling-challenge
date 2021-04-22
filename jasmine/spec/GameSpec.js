@@ -4,14 +4,16 @@ describe("Game", function(){
     var frameSpy
 
     beforeEach(function(){
-        frameSpy = jasmine.createSpy()
-        subject = new Game(FrameClass = frameSpy);
+        frameSpy = {};
+        subject = new Game();
+        subject._createFrame = jasmine.createSpy().and.returnValue(frameSpy);
+        subject.start();
     })
 
     describe("Frames", function(){
         
         it("is initialized with 10 frames", function(){
-            expect(subject.frames().length).toEqual(10)
+            expect(subject.frames().length).toEqual(10);
         })
 
     })
