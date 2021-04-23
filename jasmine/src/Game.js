@@ -11,13 +11,17 @@ class Game {
     }
 
     currentFrame(){
-        return this.all_frames.find(frame => frame.isComplete() == false)
+        return this.frames().find(frame => frame.isComplete() == false)
+    }
+
+    roll(pins){
+        this.currentFrame().roll(pins)
     }
 
     _setUpFrames(){
         var i = 0;
          do {
-             this.all_frames.push(new Frame());
+             this.frames().push(new Frame());
              i++;
          } while (i < this.NUMBER_OF_FRAMES);
     }
