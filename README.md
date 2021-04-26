@@ -77,6 +77,7 @@ Reviewers will potentially be using this [code review rubric](docs/review.md).  
 ```
 As a user, so I can play a game of Bowling, I would like to see the number of frames to play.
 As a user, so I can play a game of Bowling, I would like to see what frame I am currently on.
+As a user, so I can know who is winning, I would like to see my total score.
 ```
 
 Notes:

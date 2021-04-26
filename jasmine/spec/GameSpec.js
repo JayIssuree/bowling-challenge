@@ -11,6 +11,9 @@ describe("Game", function(){
                 },
                 roll(pins){
                     return pins
+                },
+                getScore(){
+                    return null
                 }
             },
             frameSpy2 = {
@@ -20,6 +23,9 @@ describe("Game", function(){
                 },
                 roll(pins){
                     return pins
+                },
+                getScore(){
+                    return null
                 }
             },
             frameSpy3 = {
@@ -29,6 +35,9 @@ describe("Game", function(){
                 },
                 roll(pins){
                     return pins
+                },
+                getScore(){
+                    return null
                 }
             },
             frameSpy4 = {
@@ -38,6 +47,9 @@ describe("Game", function(){
                 },
                 roll(pins){
                     return pins
+                },
+                getScore(){
+                    return null
                 }
             },
             frameSpy5 = {
@@ -47,6 +59,9 @@ describe("Game", function(){
                 },
                 roll(pins){
                     return pins
+                },
+                getScore(){
+                    return null
                 }
             },
             frameSpy6 = {
@@ -56,6 +71,9 @@ describe("Game", function(){
                 },
                 roll(pins){
                     return pins
+                },
+                getScore(){
+                    return null
                 }
             },
             frameSpy7 = {
@@ -65,6 +83,9 @@ describe("Game", function(){
                 },
                 roll(pins){
                     return pins
+                },
+                getScore(){
+                    return null
                 }
             },
             frameSpy8 = {
@@ -74,6 +95,9 @@ describe("Game", function(){
                 },
                 roll(pins){
                     return pins
+                },
+                getScore(){
+                    return null
                 }
             },
             frameSpy9 = {
@@ -83,6 +107,9 @@ describe("Game", function(){
                 },
                 roll(pins){
                     return pins
+                },
+                getScore(){
+                    return null
                 }
             },
             frameSpy10 = {
@@ -92,6 +119,9 @@ describe("Game", function(){
                 },
                 roll(pins){
                     return pins
+                },
+                getScore(){
+                    return null
                 }
             }
         ]
@@ -138,6 +168,18 @@ describe("Game", function(){
             spyOn(frameSpy1, "roll")
             subject.roll(5)
             expect(frameSpy1.roll).toHaveBeenCalledWith(5)
+        })
+
+    })
+
+    describe("getTotalScore", function(){
+
+        it("returns the total score", function(){
+            spyOn(frameSpy1, "getScore").and.returnValue(8)
+            spyOn(frameSpy2, "getScore").and.returnValue(7)
+            frameSpy1.complete = true
+            frameSpy2.complete = true
+            expect(subject.getTotalScore()).toEqual(15)
         })
 
     })

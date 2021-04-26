@@ -3,6 +3,7 @@ class Game {
     constructor(){
         this.NUMBER_OF_FRAMES = 10;
         this.all_frames = [];
+        this.totalScore = 0
         this._setUpFrames();
     }
 
@@ -28,6 +29,19 @@ class Game {
              this.frames().push(new Frame());
              i++;
          } while (i < this.NUMBER_OF_FRAMES);
+    }
+
+    getTotalScore(){
+        this.calculateTotalScore()
+        return this.totalScore
+    }
+
+    calculateTotalScore(){
+        var i = 1
+        do {
+            this.totalScore += this.getFrame(i).getScore()
+            i++
+        } while (this.getFrame(i).isComplete() == true)
     }
 
 }

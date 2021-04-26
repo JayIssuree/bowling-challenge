@@ -47,6 +47,15 @@ describe("Frame", function(){
 
     })
 
+    describe("getRollPins", function(){
+
+        it("gets the pins of the roll", function(){
+            subject.roll(8)
+            expect(subject.getRollPins(1)).toEqual(8)
+        })
+
+    })
+
     describe("addRoll", function(){
 
         it("adds a roll to the frame", function(){
@@ -102,6 +111,16 @@ describe("Frame", function(){
             expect(subject.isComplete()).toBe(false)
             subject.roll(2)
             expect(subject.isComplete()).toBe(true)
+        })
+
+    })
+
+    describe("getScore", function(){
+
+        it("returns the score for the frame", function(){
+            subject.roll(5)
+            subject.roll(3)
+            expect(subject.getScore()).toEqual(8)
         })
 
     })

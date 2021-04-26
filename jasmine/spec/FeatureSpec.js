@@ -20,5 +20,18 @@ describe("Features", function(){
         })
 
     })
+
+    describe("getTotalScore", function(){
+
+        it("returns the total score given a number of rolls", function(){
+            game.roll(5)
+            game.roll(3)
+            game.roll(9)
+            game.roll(0)
+            expect(game.getTotalScore()).toEqual(17)
+            console.log(game)
+        })
+
+    })
     
 })

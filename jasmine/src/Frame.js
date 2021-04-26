@@ -4,6 +4,7 @@ class Frame {
         this.allRolls = []
         this.addRoll()
         this.complete = false
+        this.score = null
     }
 
     rolls(){
@@ -20,6 +21,10 @@ class Frame {
 
     getRoll(rollNumber){
         return this.rolls()[rollNumber - 1]
+    }
+
+    getRollPins(rollNumber){
+        return this.getRoll(rollNumber).getPins()
     }
 
     roll(pins){
@@ -42,6 +47,17 @@ class Frame {
 
     _hasTwoRolls(){
         return (this.rolls().length == 2 && (this.rolls()[0].getPins() != null && this.rolls()[1].getPins() != null))
+    }
+
+    getScore(){
+        if (this.isComplete()) {
+            this.score = this.calculateScore()
+            return this.score
+        }
+    }
+
+    calculateScore(){
+        return this.getRollPins(1) + this.getRollPins(2)
     }
 
 }
