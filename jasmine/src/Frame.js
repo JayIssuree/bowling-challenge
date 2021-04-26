@@ -1,63 +1,82 @@
 class Frame {
 
     constructor(){
-        this.allRolls = []
-        this.addRoll()
+        this.basicRolls = []
+        this.bonusRolls = []
         this.complete = false
         this.score = null
     }
 
-    rolls(){
-        return this.allRolls
+    getBasicRolls(){
+        return this.basicRolls
     }
 
-    addRoll(){
-        this.rolls().push(this._createNewRoll())
+    getBasicRoll(rollNumber){
+        return this.basicRolls[rollNumber - 1]
     }
 
-    currentRoll(){
-        return this.rolls()[this.rolls().length -1]
+    getBasicRollPins(rollNumber){
+        return this.getBasicRoll(rollNumber).getPins()
+    }
+    
+    addBasicRoll(roll){
+        this.basicRolls.push(roll)
     }
 
-    getRoll(rollNumber){
-        return this.rolls()[rollNumber - 1]
+    getBonusRolls(){
+        return this.bonusRolls
     }
 
-    getRollPins(rollNumber){
-        return this.getRoll(rollNumber).getPins()
+    getBonusRoll(rollNumber){
+        return this.bonusRolls()[rollNumber - 1]
+    }
+
+    getBonusRollPins(rollNumber){
+        return this.getBonusRoll(rollNumber).getPins()
+    }
+
+    addBonusRoll(roll){
+        var roll = this.createNewRoll(pins)
+        this.bonusRolls.push(roll)
+    }
+
+    createNewRoll(){
+        new Roll()
+    }
+
+    setRollPins(roll, pins){
+        roll.setPins(pins)
     }
 
     roll(pins){
-        this.currentRoll().setPins(pins)
-        if (this.isComplete() == false){
-            this.addRoll()
+        if (this._hasTwoRolls()){
+            return
         }
+        var roll = this.createNewRoll()
+        this.setRollPins(roll, pins)
+        this.addBasicRoll(roll)
     }
 
-    _createNewRoll(){
-        return new Roll()
-    }
-
-    isComplete(){
-        if (this._hasTwoRolls()) {
-            this.complete = true
-        }
-        return this.complete
-    }
+    // isComplete(){
+    //     if (this._hasTwoRolls()) {
+    //         this.complete = true
+    //     }
+    //     return this.complete
+    // }
 
     _hasTwoRolls(){
-        return (this.rolls().length == 2 && (this.rolls()[0].getPins() != null && this.rolls()[1].getPins() != null))
+        return (this.basicRolls.length == 2)
     }
 
-    getScore(){
-        if (this.isComplete()) {
-            this.score = this.calculateScore()
-            return this.score
-        }
-    }
+    // getScore(){
+    //     if (this.isComplete()) {
+    //         this.score = this.calculateScore()
+    //         return this.score
+    //     }
+    // }
 
-    calculateScore(){
-        return this.getRollPins(1) + this.getRollPins(2)
-    }
+    // calculateScore(){
+    //     return this.getRollPins(1) + this.getRollPins(2)
+    // }
 
 }
