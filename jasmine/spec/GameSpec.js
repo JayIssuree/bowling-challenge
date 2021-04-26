@@ -120,6 +120,18 @@ describe("Game", function(){
 
     })
 
+    describe("getFrame", function(){
+
+        it("returns a specific frame given the number", function(){
+            expect(subject.getFrame(1)).toEqual(frameSpy1)
+            expect(subject.getFrame(2)).toEqual(frameSpy2)
+            expect(subject.getFrame(3)).toEqual(frameSpy3)
+            expect(subject.getFrame(4)).toEqual(frameSpy4)
+            expect(subject.getFrame(5)).toEqual(frameSpy5)
+        })
+        
+    })
+
     describe("roll", function(){
 
         it("adds a roll to the current frame", function(){

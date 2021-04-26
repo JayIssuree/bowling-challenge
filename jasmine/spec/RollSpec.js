@@ -6,7 +6,7 @@ describe("Roll", function(){
         subject = new Roll()
     })
 
-    describe("pins", function(){
+    describe("setPins", function(){
         
         it("saves the number of pins for the roll", function(){
             subject.setPins(5)

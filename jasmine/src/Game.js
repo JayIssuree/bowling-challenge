@@ -14,6 +14,10 @@ class Game {
         return this.frames().find(frame => frame.isComplete() == false)
     }
 
+    getFrame(frameNumber){
+        return this.all_frames[frameNumber - 1]
+    }
+
     roll(pins){
         this.currentFrame().roll(pins)
     }

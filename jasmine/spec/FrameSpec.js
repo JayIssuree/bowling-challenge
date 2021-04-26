@@ -15,8 +15,12 @@ describe("Frame", function(){
         }
         rollSpy2 = {
             pins: null,
-            setPins: function(pins){},
-            getPins: function(){}
+            setPins: function(pins){
+                this.pins = pins
+            },
+            getPins: function(){
+                return this.pins
+            }
         }
         subject.allRolls = [rollSpy1]
         subject._createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
@@ -26,6 +30,19 @@ describe("Frame", function(){
 
         it("starts with 1 roll", function(){
             expect(subject.rolls().length).toEqual(1)
+        })
+
+    })
+
+    describe("getRoll", function(){
+
+        it("returns the roll given a number", function(){
+            expect(subject.getRoll(1)).toEqual(rollSpy1)
+        })
+
+        it("returns the roll given a number", function(){
+            subject.roll(1)
+            expect(subject.getRoll(2)).toEqual(rollSpy2)
         })
 
     })
@@ -62,6 +79,11 @@ describe("Frame", function(){
             expect(subject.currentRoll()).toEqual(rollSpy1)
         })
 
+        it("returns the current roll (second)", function(){
+            subject.roll(2)
+            expect(subject.currentRoll()).toEqual(rollSpy2)
+        })
+
     })
 
     describe("isComplete", function(){
@@ -76,10 +98,10 @@ describe("Frame", function(){
         })
 
         it("is complete once there are 2 rolls", function(){
-            subject.roll(4)
+            subject.roll(1)
             expect(subject.isComplete()).toBe(false)
-            subject.roll(4)
-            console.log(subject)
+            subject.roll(2)
+            expect(subject.isComplete()).toBe(true)
         })
 
     })

@@ -18,6 +18,10 @@ class Frame {
         return this.rolls()[this.rolls().length -1]
     }
 
+    getRoll(rollNumber){
+        return this.rolls()[rollNumber - 1]
+    }
+
     roll(pins){
         this.currentRoll().setPins(pins)
         if (this.isComplete() == false){
@@ -37,7 +41,7 @@ class Frame {
     }
 
     _hasTwoRolls(){
-        return (this.rolls().length >= 2 && (this.rolls()[0].getPins() != null && this.rolls()[1].getPins() != null))
+        return (this.rolls().length == 2 && (this.rolls()[0].getPins() != null && this.rolls()[1].getPins() != null))
     }
 
 }
