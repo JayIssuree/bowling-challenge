@@ -29,7 +29,6 @@ describe("Features", function(){
             game.roll(9)
             game.roll(0)
             expect(game.getTotalScore()).toEqual(17)
-            console.log(game)
         })
 
     })
