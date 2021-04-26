@@ -38,83 +38,140 @@ describe("Frame", function(){
         it("sets the rolls pins", function(){
             subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
             spyOn(rollSpy1, "setPins")
-            var roll = subject.createNewRoll()
-            subject.setRollPins(roll, 5)
+            var basicRoll = subject.createNewRoll()
+            subject.setRollPins(basicRoll, 5)
             expect(rollSpy1.setPins).toHaveBeenCalledWith(5)
         })
+        
+    })
+    
+    describe("basicRolls", function(){
+        
+        describe("getBasicRolls", function(){
+    
+            it("starts off empty", function(){
+                expect(subject.getBasicRolls()).toEqual([])
+            })
+    
+        })
+
+        describe("basicRoll", function(){
+    
+            it("returns the roll", function(){
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
+                expect(subject.basicRoll(1)).toEqual(rollSpy1)
+            })
+    
+            it("returns an array with 1 roll object when 1 has been made", function(){
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
+                subject.basicRoll(1)
+                expect(subject.getBasicRolls()).toEqual([rollSpy1])
+            })
+    
+            it("returns an array with 2 roll objects when 2 have been made", function(){
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
+                subject.basicRoll(1)
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
+                subject.basicRoll(2)
+                expect(subject.getBasicRolls()).toEqual([rollSpy1, rollSpy2])
+            })
+    
+            it("only adds 2 basic rolls to the array", function(){
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
+                subject.basicRoll(1)
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
+                subject.basicRoll(2)
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy3)
+                subject.basicRoll(3)
+                expect(subject.getBasicRolls()).toEqual([rollSpy1, rollSpy2])
+            })
+    
+        })
+    
+        describe("getBasicRoll", function(){
+    
+            it("returns the specific roll", function(){
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
+                subject.basicRoll(1)
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
+                subject.basicRoll(2)
+                expect(subject.getBasicRoll(1)).toEqual(rollSpy1)
+                expect(subject.getBasicRoll(2)).toEqual(rollSpy2)
+            })
+    
+        })
+    
+        describe("getBasicRollPins", function(){
+    
+            it("returns the pins of that roll", function(){
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
+                subject.basicRoll(1)
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
+                subject.basicRoll(2)
+                expect(subject.getBasicRollPins(1)).toEqual(1)
+                expect(subject.getBasicRollPins(2)).toEqual(2)
+            })
+    
+        })
+    
+        describe("addBasicRoll", function(){
+    
+            it("adds the object to the basic rolls array", function(){
+                subject.addBasicRoll(rollSpy1)
+                expect(subject.getBasicRoll(1)).toEqual(rollSpy1)
+            })
+    
+        })
 
     })
 
-    describe("getBasicRolls", function(){
+    describe("bonusRolls", function(){
 
-        it("starts off empty", function(){
-            expect(subject.getBasicRolls()).toEqual([])
+        describe("getBonusRolls", function(){
+
+            it("starts off empty", function(){
+                expect(subject.getBonusRolls()).toEqual([])
+            })
+
+        })
+
+        describe("bonusRoll", function(){
+
+            it("returns the roll", function(){
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
+                expect(subject.bonusRoll(1)).toEqual(rollSpy1)
+            })
+
+            it("returns the array of bonus rolls", function(){
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
+                subject.bonusRoll(1)
+                expect(subject.getBonusRolls()).toEqual([rollSpy1])
+            })
+
+        })
+
+        describe("getBonusRoll", function(){
+
+            it("returns the specific bonus roll", function(){
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
+                expect(subject.bonusRoll(1)).toEqual(rollSpy1)
+            })
+
+        })
+
+        describe("getBonusRollPins", function(){
+
+            it("returns the pins of that roll", function(){
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
+                subject.bonusRoll(1)
+                expect(subject.getBonusRollPins(1)).toEqual(1)
+            })
+
         })
 
     })
 
-    describe("roll", function(){
 
-        it("returns an array with 1 roll object when 1 has been made", function(){
-            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
-            subject.roll(1)
-            expect(subject.getBasicRolls()).toEqual([rollSpy1])
-        })
-
-        it("returns an array with 2 roll objects when 2 have been made", function(){
-            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
-            subject.roll(1)
-            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
-            subject.roll(2)
-            expect(subject.getBasicRolls()).toEqual([rollSpy1, rollSpy2])
-        })
-
-        it("only adds 2 basic rolls to the array", function(){
-            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
-            subject.roll(1)
-            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
-            subject.roll(2)
-            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy3)
-            subject.roll(3)
-            expect(subject.getBasicRolls()).toEqual([rollSpy1, rollSpy2])
-        })
-
-    })
-
-    describe("getBasicRolls", function(){
-
-        it("returns the specific roll", function(){
-            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
-            subject.roll(1)
-            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
-            subject.roll(2)
-            expect(subject.getBasicRoll(1)).toEqual(rollSpy1)
-            expect(subject.getBasicRoll(2)).toEqual(rollSpy2)
-        })
-
-    })
-
-    describe("getBasicRollPins", function(){
-
-        it("returns the pins of that roll", function(){
-            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
-            subject.roll(1)
-            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
-            subject.roll(2)
-            expect(subject.getBasicRollPins(1)).toEqual(1)
-            expect(subject.getBasicRollPins(2)).toEqual(2)
-        })
-
-    })
-
-    describe("addBasicRoll", function(){
-
-        it("adds the object to the basic rolls array", function(){
-            subject.addBasicRoll(rollSpy1)
-            expect(subject.getBasicRoll(1)).toEqual(rollSpy1)
-        })
-
-    })
 
 //     describe("isComplete", function(){
 
