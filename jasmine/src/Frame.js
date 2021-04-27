@@ -6,7 +6,9 @@ class Frame {
         this.numberOfBonusRollsToBeAdded = 0
         this.basicRollsComplete = false
         this.bonusRollsComplete = null
-        this.score = null
+        this.basicRollsScore = 0
+        this.bonusRollsScore = 0
+        this.frameScore = 0
     }
 
     getBasicRolls(){
@@ -121,15 +123,46 @@ class Frame {
         return this.bonusRollsComplete
     }
 
-    // getScore(){
-    //     if (this.isBasicRollsComplete()) {
-    //         this.score = this.calculateScore()
-    //         return this.score
-    //     }
-    // }
+    getBasicRollsScore(){
+        this.calculateBasicRollsScore()
+        return this.basicRollsScore
+    }
 
-    // calculateScore(){
-    //     return this.getRollPins(1) + this.getRollPins(2)
-    // }
+    getBonusRollsScore(){
+        this.calculateBonusRollsScore()
+        return this.bonusRollsScore
+    }
+
+    getFrameScore(){
+        this.calculateFrameScore()
+        return this.frameScore
+    }
+
+    calculateBasicRollsScore(){
+        this.basicRollsScore = 0
+        if (this.isBasicRollsComplete()){
+            var i = 1
+            do {
+                this.basicRollsScore += this.getBasicRollPins(i)
+                i++
+            } while (i <= this.basicRolls.length)
+        }
+    }
+
+    calculateBonusRollsScore(){
+        this.bonusRollsScore = 0
+        if (this.isBonusRollsComplete()){
+            var i = 1
+            do {
+                this.bonusRollsScore += this.getBonusRollPins(i)
+                i++
+            } while (i <= this.bonusRolls.length)
+        }
+    }
+
+    calculateFrameScore(){
+        this.frameScore = (this.getBasicRollsScore() + this.getBonusRollsScore())
+        console.log(this)
+    }
 
 }

@@ -196,6 +196,13 @@ describe("Frame", function(){
 
             describe("getBonusRoll", function(){
 
+                it("does not allow for a bonus roll to be added if no spare has been scored", function(){
+                    subject = new Frame()
+                    subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
+                    subject.bonusRoll(4)
+                    expect(subject.getBasicRolls()).toEqual([])
+                })
+
                 it("returns the specific bonus roll", function(){
                     subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy3)
                     subject.bonusRoll(8)
@@ -298,6 +305,13 @@ describe("Frame", function(){
             })
 
             describe("getBonusRoll", function(){
+
+                it("does not allow for a bonus roll to be added if no strike has been scored", function(){
+                    subject = new Frame()
+                    subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
+                    subject.bonusRoll(4)
+                    expect(subject.getBasicRolls()).toEqual([])
+                })
 
                 it("returns the specific bonus roll", function(){
                     subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
@@ -429,14 +443,69 @@ describe("Frame", function(){
 
     })
 
-//     describe("getScore", function(){
+    describe("scores", function(){
+        
+        describe("getBasicRollsScore", function(){
+    
+            it("returns the basic roll score", function(){
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
+                subject.basicRoll(7)
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
+                subject.basicRoll(2)
+                expect(subject.getBasicRollsScore()).toEqual(9)
+            })
+    
+        })
+    
+        describe("getBonusRollsScore", function(){
+            
+            it("returns the score of the bonus rolls for a spare", function(){
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
+                subject.basicRoll(7)
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
+                subject.basicRoll(3)
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy3)
+                subject.bonusRoll(5)
+                expect(subject.getBonusRollsScore()).toEqual(5)
+            })
 
-//         it("returns the score for the frame", function(){
-//             subject.roll(5)
-//             subject.roll(3)
-//             expect(subject.getScore()).toEqual(8)
-//         })
+            it("returns the score of the bonus rolls for a strike", function(){
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
+                subject.basicRoll(10)
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
+                subject.bonusRoll(3)
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy3)
+                subject.bonusRoll(5)
+                expect(subject.getBonusRollsScore()).toEqual(8)
+            })
+    
+        })
+    
+        describe("getFrameScore", function(){
+            
+            it("returns the total score for a spare", function(){
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
+                subject.basicRoll(7)
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
+                subject.basicRoll(3)
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy3)
+                subject.bonusRoll(5)
+                expect(subject.getFrameScore()).toEqual(15)
+            })
 
-//     })
+            it("returns the total score for a strike", function(){
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
+                subject.basicRoll(10)
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
+                subject.bonusRoll(3)
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy3)
+                subject.bonusRoll(5)
+                expect(subject.getFrameScore()).toEqual(18)
+            })
+
+        })
+
+    })
+
 
 })
