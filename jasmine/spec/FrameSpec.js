@@ -144,89 +144,208 @@ describe("Frame", function(){
 
         })
 
-        beforeEach(function(){
-            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
-            subject.basicRoll(4)
-            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
-            subject.basicRoll(6)
-        })
+        describe("isSpare", function(){
 
-        describe("bonusRoll", function(){
-
-            it("returns the roll", function(){
-                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy3)
-                expect(subject.bonusRoll(5)).toEqual(rollSpy3)
+            beforeEach(function(){
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
+                subject.basicRoll(4)
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
+                subject.basicRoll(6)
             })
 
-            it("returns the array of bonus rolls", function(){
-                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy3)
-                subject.bonusRoll(4)
-                expect(subject.getBonusRolls()).toEqual([rollSpy3])
+            it("determines a spare has been rolled", function(){
+                expect(subject.isSpare()).toBe(true)
+                expect(subject.isStrike()).toBe(false)
+            })
+    
+            it("returns false when a spare has not been rolled", function(){
+                subject = new Frame()
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
+                subject.basicRoll(4)
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
+                subject.basicRoll(4)
+                expect(subject.isSpare()).toBe(false)
+            })
+    
+            it("sets the number of bonus rolls to be added to 1", function(){
+                expect(subject.getNumberOfBonusRollsToBeAdded()).toEqual(1)
             })
 
-            it("only adds one bonus roll after a spare", function(){
-                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy3)
-                subject.bonusRoll(4)
-                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy4)
-                subject.bonusRoll(5)
-                expect(subject.getBonusRolls()).toEqual([rollSpy3])
+            describe("bonusRoll", function(){
+
+                it("returns the roll", function(){
+                    subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy3)
+                    expect(subject.bonusRoll(5)).toEqual(rollSpy3)
+                })
+    
+                it("returns the array of bonus rolls", function(){
+                    subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy3)
+                    subject.bonusRoll(4)
+                    expect(subject.getBonusRolls()).toEqual([rollSpy3])
+                })
+    
+                it("only adds one bonus roll after a spare", function(){
+                    subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy3)
+                    subject.bonusRoll(4)
+                    subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy4)
+                    subject.bonusRoll(5)
+                    expect(subject.getBonusRolls()).toEqual([rollSpy3])
+                })
+    
             })
 
-        })
+            describe("getBonusRoll", function(){
 
-        describe("getBonusRoll", function(){
-
-            it("returns the specific bonus roll", function(){
-                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy3)
-                subject.bonusRoll(8)
-                expect(subject.getBonusRoll(1)).toEqual(rollSpy3)
+                it("returns the specific bonus roll", function(){
+                    subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy3)
+                    subject.bonusRoll(8)
+                    expect(subject.getBonusRoll(1)).toEqual(rollSpy3)
+                })
+    
             })
 
-        })
+            describe("getBonusRollPins", function(){
 
-        describe("getBonusRollPins", function(){
-
-            it("returns the pins of that roll", function(){
-                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy3)
-                subject.bonusRoll(5)
-                expect(subject.getBonusRollPins(1)).toEqual(5)
+                it("returns the pins of that roll", function(){
+                    subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy3)
+                    subject.bonusRoll(5)
+                    expect(subject.getBonusRollPins(1)).toEqual(5)
+                })
+    
             })
 
+            describe("requiresBonusRollToBeAdded", function(){
+
+                it("returns true when bonus rolls need to be added", function(){
+                    expect(subject.requiresBonusRollToBeAdded()).toBe(true)
+                })
+
+                it("returns false once the bonus has been added", function(){
+                    subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy3)
+                    subject.bonusRoll(4)
+                    expect(subject.requiresBonusRollToBeAdded()).toBe(false)
+                })
+
+            })
+    
         })
 
-    })
+        describe("isStrike", function(){
 
-    describe("isSpare", function(){
+            beforeEach(function(){
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
+                subject.basicRoll(10)
+            })
 
-        it("determines a spare has been rolled", function(){
-            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
-            subject.basicRoll(4)
-            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
-            subject.basicRoll(6)
-            expect(subject.isSpare()).toBe(true)
-        })
+            it("determines a strike has been rolled", function(){
+                expect(subject.isSpare()).toBe(false)
+                expect(subject.isStrike()).toBe(true)
+            })
 
-        it("returns false when a spare has not been rolled", function(){
-            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
-            subject.basicRoll(4)
-            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
-            subject.basicRoll(4)
-            expect(subject.isSpare()).toBe(false)
-        })
+            it("returns false when a strike has not been rolled (1 roll)", function(){
+                subject = new Frame()
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
+                subject.basicRoll(9)
+                expect(subject.isStrike()).toBe(false)
+            })
 
-        it("sets the number of bonus rolls to be added to 1", function(){
-            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
-            subject.basicRoll(4)
-            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
-            subject.basicRoll(6)
-            expect(subject.getNumberOfBonusRollsToBeAdded()).toEqual(1)
+            it("returns false when a strike has not been rolled (2 rolls)", function(){
+                subject = new Frame()
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
+                subject.basicRoll(4)
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
+                subject.basicRoll(5)
+                expect(subject.isStrike()).toBe(false)
+            })
+
+            it("sets the number of bonus rolls to be added to 2", function(){
+                expect(subject.getNumberOfBonusRollsToBeAdded()).toEqual(2)
+            })
+
+            it("does not allow for another basic roll to be added after a strike", function(){
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
+                subject.basicRoll(5)
+                expect(subject.getBasicRolls()).toEqual([rollSpy1])
+            })
+
+            describe("bonusRoll", function(){
+
+                it("returns the roll", function(){
+                    subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
+                    expect(subject.bonusRoll(5)).toEqual(rollSpy2)
+                    subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy3)
+                    expect(subject.bonusRoll(3)).toEqual(rollSpy3)
+                })
+    
+                it("returns the array of bonus rolls", function(){
+                    subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
+                    subject.bonusRoll(4)
+                    subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy3)
+                    subject.bonusRoll(5)
+                    expect(subject.getBonusRolls()).toEqual([rollSpy2, rollSpy3])
+                })
+    
+                it("only adds two bonus roll after a strike", function(){
+                    subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
+                    subject.bonusRoll(3)
+                    subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy3)
+                    subject.bonusRoll(4)
+                    subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy4)
+                    subject.bonusRoll(1)
+                    expect(subject.getBonusRolls()).toEqual([rollSpy2, rollSpy3])
+                })
+    
+            })
+
+            describe("getBonusRoll", function(){
+
+                it("returns the specific bonus roll", function(){
+                    subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
+                    subject.bonusRoll(8)
+                    subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy3)
+                    subject.bonusRoll(2)
+                    expect(subject.getBonusRoll(1)).toEqual(rollSpy2)
+                    expect(subject.getBonusRoll(2)).toEqual(rollSpy3)
+                })
+    
+            })
+
+            describe("getBonusRollPins", function(){
+
+                it("returns the pins of that roll", function(){
+                    subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
+                    subject.bonusRoll(4)
+                    subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy3)
+                    subject.bonusRoll(6)
+                    expect(subject.getBonusRollPins(1)).toEqual(4)
+                    expect(subject.getBonusRollPins(2)).toEqual(6)
+                })
+    
+            })
+
+            describe("requiresBonusRollToBeAdded", function(){
+
+                it("returns true when bonus rolls need to be added", function(){
+                    expect(subject.requiresBonusRollToBeAdded()).toBe(true)
+                })
+
+                it("returns false once the bonus has been added", function(){
+                    subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
+                    subject.bonusRoll(4)
+                    subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy3)
+                    subject.bonusRoll(6)
+                    expect(subject.requiresBonusRollToBeAdded()).toBe(false)
+                })
+
+            })
+
         })
 
     })
 
     describe("isComplete", function(){
 
-        it("starts of false", function(){
+        it("starts off false", function(){
             expect(subject.isComplete()).toBe(false)
         })
 
@@ -235,6 +354,12 @@ describe("Frame", function(){
             subject.basicRoll(4)
             subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
             subject.basicRoll(6)
+            expect(subject.isComplete()).toBe(true)
+        })
+
+        it("returns true if a strike has been rolled", function(){
+            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
+            subject.basicRoll(10)
             expect(subject.isComplete()).toBe(true)
         })
 
