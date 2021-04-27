@@ -343,10 +343,10 @@ describe("Frame", function(){
 
     })
 
-    describe("isComplete", function(){
+    describe("isBasicRollsComplete", function(){
 
         it("starts off false", function(){
-            expect(subject.isComplete()).toBe(false)
+            expect(subject.isBasicRollsComplete()).toBe(false)
         })
 
         it("returns true when there are 2 basic rolls", function(){
@@ -354,13 +354,77 @@ describe("Frame", function(){
             subject.basicRoll(4)
             subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
             subject.basicRoll(6)
-            expect(subject.isComplete()).toBe(true)
+            expect(subject.isBasicRollsComplete()).toBe(true)
         })
 
         it("returns true if a strike has been rolled", function(){
             subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
             subject.basicRoll(10)
-            expect(subject.isComplete()).toBe(true)
+            expect(subject.isBasicRollsComplete()).toBe(true)
+        })
+
+    })
+
+    describe("isBonusRollsComplete", function(){
+
+        it("starts off null", function(){
+            expect(subject.isBonusRollsComplete()).toBe(null)
+        })
+
+        it("returns null when basic rolls are not complete", function(){
+            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
+            subject.basicRoll(4)
+            expect(subject.isBonusRollsComplete()).toBe(null)
+        })
+
+        it("returns true when basic rolls are complete and there are no bonuses to be added", function(){
+            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
+            subject.basicRoll(4)
+            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
+            subject.basicRoll(2)
+            expect(subject.isBonusRollsComplete()).toBe(true)
+        })
+
+        it("returns false when getting a spare and no bonus rolls have been added", function(){
+            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
+            subject.basicRoll(4)
+            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
+            subject.basicRoll(6)
+            expect(subject.isBonusRollsComplete()).toBe(false)
+        })
+
+        it("returns true when getting a spare and the bonus roll has been added", function(){
+            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
+            subject.basicRoll(4)
+            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
+            subject.basicRoll(6)
+            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy3)
+            subject.bonusRoll(2)
+            expect(subject.isBonusRollsComplete()).toBe(true)
+        })
+
+        it("returns false when getting a strike and no bonus rolls have been added", function(){
+            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
+            subject.basicRoll(10)
+            expect(subject.isBonusRollsComplete()).toBe(false)
+        })
+
+        it("returns false when getting a strike and only 1 bonus rolls has been added", function(){
+            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
+            subject.basicRoll(10)
+            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
+            subject.bonusRoll(6)
+            expect(subject.isBonusRollsComplete()).toBe(false)
+        })
+
+        it("returns true when getting a strike and 2 bonus rolls have been added", function(){
+            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
+            subject.basicRoll(10)
+            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
+            subject.bonusRoll(3)
+            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy3)
+            subject.bonusRoll(4)
+            expect(subject.isBonusRollsComplete()).toBe(true)
         })
 
     })

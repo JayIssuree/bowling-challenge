@@ -4,7 +4,8 @@ class Frame {
         this.basicRolls = []
         this.bonusRolls = []
         this.numberOfBonusRollsToBeAdded = 0
-        this.complete = false
+        this.basicRollsComplete = false
+        this.bonusRollsComplete = null
         this.score = null
     }
 
@@ -49,7 +50,7 @@ class Frame {
     }
 
     basicRoll(pins){
-        if (this.isComplete() == false){
+        if (this.isBasicRollsComplete() == false){
             var roll = this.createNewRoll()
             this.setRollPins(roll, pins)
             this.addBasicRoll(roll)
@@ -104,15 +105,24 @@ class Frame {
         return this.numberOfBonusRollsToBeAdded > 0
     }
     
-    isComplete(){
+    isBasicRollsComplete(){
         if (this._hasTwoBasicRolls() || this.isStrike()) {
-            this.complete = true
+            this.basicRollsComplete = true
         }
-        return this.complete
+        return this.basicRollsComplete
+    }
+
+    isBonusRollsComplete(){
+        if (this.isBasicRollsComplete() && (this.requiresBonusRollToBeAdded() == false)) {
+            this.bonusRollsComplete = true
+        } else if (this.isBasicRollsComplete() && this.requiresBonusRollToBeAdded()) {
+            this.bonusRollsComplete = false
+        }
+        return this.bonusRollsComplete
     }
 
     // getScore(){
-    //     if (this.isComplete()) {
+    //     if (this.isBasicRollsComplete()) {
     //         this.score = this.calculateScore()
     //         return this.score
     //     }
