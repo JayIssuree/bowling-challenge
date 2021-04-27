@@ -5,134 +5,204 @@ describe("Game", function(){
     beforeEach(function(){
         allFrames = [
             frameSpy1 = {
-                complete: false,
-                isComplete(){
-                    return this.complete
+                basicRollsComplete: false,
+                bonusRollsComplete: null,
+                isBasicRollsComplete(){
+                    return this.basicRollsComplete
                 },
-                roll(pins){
-                    return pins
+                requiresBonusRollToBeAdded(){
+                    return this.bonusRollsToBeAdded
+                },
+                basicRoll(pins){
+                    return this
+                },
+                bonusRoll(pins){
+                    return this
                 },
                 getScore(){
-                    return null
+                    return this
                 }
             },
             frameSpy2 = {
-                complete: false,
-                isComplete(){
-                    return this.complete
+                basicRollsComplete: false,
+                bonusRollsComplete: null,
+                isBasicRollsComplete(){
+                    return this.basicRollsComplete
                 },
-                roll(pins){
-                    return pins
+                requiresBonusRollToBeAdded(){
+                    return this.bonusRollsToBeAdded
+                },
+                basicRoll(pins){
+                    return this
+                },
+                bonusRoll(pins){
+                    return this
                 },
                 getScore(){
-                    return null
+                    return this
                 }
             },
             frameSpy3 = {
-                complete: false,
-                isComplete(){
-                    return this.complete
+                basicRollsComplete: false,
+                bonusRollsComplete: null,
+                isBasicRollsComplete(){
+                    return this.basicRollsComplete
                 },
-                roll(pins){
-                    return pins
+                requiresBonusRollToBeAdded(){
+                    return this.bonusRollsToBeAdded
+                },
+                basicRoll(pins){
+                    return this
+                },
+                bonusRoll(pins){
+                    return this
                 },
                 getScore(){
-                    return null
+                    return this
                 }
             },
             frameSpy4 = {
-                complete: false,
-                isComplete(){
-                    return this.complete
+                basicRollsComplete: false,
+                bonusRollsComplete: null,
+                isBasicRollsComplete(){
+                    return this.basicRollsComplete
                 },
-                roll(pins){
-                    return pins
+                requiresBonusRollToBeAdded(){
+                    return this.bonusRollsToBeAdded
+                },
+                basicRoll(pins){
+                    return this
+                },
+                bonusRoll(pins){
+                    return this
                 },
                 getScore(){
-                    return null
+                    return this
                 }
             },
             frameSpy5 = {
-                complete: false,
-                isComplete(){
-                    return this.complete
+                basicRollsComplete: false,
+                bonusRollsComplete: null,
+                isBasicRollsComplete(){
+                    return this.basicRollsComplete
                 },
-                roll(pins){
-                    return pins
+                requiresBonusRollToBeAdded(){
+                    return this.bonusRollsToBeAdded
+                },
+                basicRoll(pins){
+                    return this
+                },
+                bonusRoll(pins){
+                    return this
                 },
                 getScore(){
-                    return null
+                    return this
                 }
             },
             frameSpy6 = {
-                complete: false,
-                isComplete(){
-                    return this.complete
+                basicRollsComplete: false,
+                bonusRollsComplete: null,
+                isBasicRollsComplete(){
+                    return this.basicRollsComplete
                 },
-                roll(pins){
-                    return pins
+                requiresBonusRollToBeAdded(){
+                    return this.bonusRollsToBeAdded
+                },
+                basicRoll(pins){
+                    return this
+                },
+                bonusRoll(pins){
+                    return this
                 },
                 getScore(){
-                    return null
+                    return this
                 }
             },
             frameSpy7 = {
-                complete: false,
-                isComplete(){
-                    return this.complete
+                basicRollsComplete: false,
+                bonusRollsComplete: null,
+                isBasicRollsComplete(){
+                    return this.basicRollsComplete
                 },
-                roll(pins){
-                    return pins
+                requiresBonusRollToBeAdded(){
+                    return this.bonusRollsToBeAdded
+                },
+                basicRoll(pins){
+                    return this
+                },
+                bonusRoll(pins){
+                    return this
                 },
                 getScore(){
-                    return null
+                    return this
                 }
             },
             frameSpy8 = {
-                complete: false,
-                isComplete(){
-                    return this.complete
+                basicRollsComplete: false,
+                bonusRollsComplete: null,
+                isBasicRollsComplete(){
+                    return this.basicRollsComplete
                 },
-                roll(pins){
-                    return pins
+                requiresBonusRollToBeAdded(){
+                    return this.bonusRollsToBeAdded
+                },
+                basicRoll(pins){
+                    return this
+                },
+                bonusRoll(pins){
+                    return this
                 },
                 getScore(){
-                    return null
+                    return this
                 }
             },
             frameSpy9 = {
-                complete: false,
-                isComplete(){
-                    return this.complete
+                basicRollsComplete: false,
+                bonusRollsComplete: null,
+                isBasicRollsComplete(){
+                    return this.basicRollsComplete
                 },
-                roll(pins){
-                    return pins
+                requiresBonusRollToBeAdded(){
+                    return this.bonusRollsToBeAdded
+                },
+                basicRoll(pins){
+                    return this
+                },
+                bonusRoll(pins){
+                    return this
                 },
                 getScore(){
-                    return null
+                    return this
                 }
             },
             frameSpy10 = {
-                complete: false,
-                isComplete(){
-                    return this.complete
+                basicRollsComplete: false,
+                bonusRollsComplete: null,
+                isBasicRollsComplete(){
+                    return this.basicRollsComplete
                 },
-                roll(pins){
-                    return pins
+                requiresBonusRollToBeAdded(){
+                    return this.bonusRollsToBeAdded
+                },
+                basicRoll(pins){
+                    return this
+                },
+                bonusRoll(pins){
+                    return this
                 },
                 getScore(){
-                    return null
+                    return this
                 }
             }
         ]
         subject = new Game();
-        subject.all_frames = allFrames
+        subject.frames = allFrames
     })
 
     describe("frames", function(){
         
         it("is initialized with 10 frames", function(){
-            expect(subject.frames().length).toEqual(10);
+            expect(subject.getFrames().length).toEqual(10);
         })
 
     })
@@ -144,8 +214,14 @@ describe("Game", function(){
         })
 
         it("returns the next incomplete frame", function(){
-            frameSpy1.complete = true
+            frameSpy1.basicRollsComplete = true
             expect(subject.currentFrame()).toEqual(frameSpy2)
+        })
+
+        it("returns the third frame", function(){
+            frameSpy1.basicRollsComplete = true
+            frameSpy2.basicRollsComplete = true
+            expect(subject.currentFrame()).toEqual(frameSpy3)
         })
 
     })
@@ -164,24 +240,66 @@ describe("Game", function(){
 
     describe("roll", function(){
 
-        it("adds a roll to the current frame", function(){
-            spyOn(frameSpy1, "roll")
+        it("adds a basicRoll to the current frame", function(){
+            spyOn(frameSpy1, "basicRoll")
             subject.roll(5)
-            expect(frameSpy1.roll).toHaveBeenCalledWith(5)
+            expect(frameSpy1.basicRoll).toHaveBeenCalledWith(5)
         })
 
     })
 
-    describe("getTotalScore", function(){
+    describe("getPreviousFrames", function(){
 
-        it("returns the total score", function(){
-            spyOn(frameSpy1, "getScore").and.returnValue(8)
-            spyOn(frameSpy2, "getScore").and.returnValue(7)
-            frameSpy1.complete = true
-            frameSpy2.complete = true
-            expect(subject.getTotalScore()).toEqual(15)
+        it("returns an array of the frames that are before the current frame", function(){
+            frameSpy1.basicRollsComplete = true
+            frameSpy2.basicRollsComplete = true
+            frameSpy3.basicRollsComplete = true
+            frameSpy4.basicRollsComplete = true
+            frameSpy5.basicRollsComplete = true
+            expect(subject.getPreviousFrames()).toEqual([frameSpy1, frameSpy2, frameSpy3, frameSpy4, frameSpy5])
+        })
+    })
+
+    describe("getPreviousFramesThatRequireBonusRolls", function(){
+        
+        it("returns an array of the frames that require a bonus roll to be added", function(){
+            frameSpy1.basicRollsComplete = true
+            frameSpy2.basicRollsComplete = true
+            frameSpy2.bonusRollsToBeAdded = true
+            frameSpy3.basicRollsComplete = true
+            frameSpy3.bonusRollsToBeAdded = true
+            expect(subject.getPreviousFramesThatRequireBonusRolls()).toEqual([frameSpy2, frameSpy3])
         })
 
     })
+
+    describe("addRollToBonusRollsOfPreviousFrames", function(){
+
+        it("calls the correct methods on the frames that require a bonus roll", function(){
+            spyOn(frameSpy2, "bonusRoll")
+            spyOn(frameSpy3, "bonusRoll")
+            frameSpy1.basicRollsComplete = true
+            frameSpy2.basicRollsComplete = true
+            frameSpy2.bonusRollsToBeAdded = true
+            frameSpy3.basicRollsComplete = true
+            frameSpy3.bonusRollsToBeAdded = true
+            subject.roll(5)
+            expect(frameSpy2.bonusRoll).toHaveBeenCalledWith(5)
+            expect(frameSpy3.bonusRoll).toHaveBeenCalledWith(5)
+
+        })
+    })
+
+    // describe("getTotalScore", function(){
+
+    //     it("returns the total score", function(){
+    //         spyOn(frameSpy1, "getScore").and.returnValue(8)
+    //         spyOn(frameSpy2, "getScore").and.returnValue(7)
+    //         frameSpy1.basicRollsComplete = true
+    //         frameSpy2.basicRollsComplete = true
+    //         expect(subject.getTotalScore()).toEqual(15)
+    //     })
+
+    // })
 
 })
