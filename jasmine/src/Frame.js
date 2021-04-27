@@ -49,7 +49,7 @@ class Frame {
     }
 
     basicRoll(pins){
-        if (this._hasTwoBasicRolls()){
+        if (this.isComplete()){
             return
         }
         var roll = this.createNewRoll()
@@ -92,7 +92,12 @@ class Frame {
         this.numberOfBonusRollsToBeAdded -= 1
     }
     
-    // isComplete?
+    isComplete(){
+        if (this._hasTwoBasicRolls()) {
+            this.complete = true
+        }
+        return this.complete
+    }
 
     // getScore(){
     //     if (this.isComplete()) {

@@ -224,6 +224,22 @@ describe("Frame", function(){
 
     })
 
+    describe("isComplete", function(){
+
+        it("starts of false", function(){
+            expect(subject.isComplete()).toBe(false)
+        })
+
+        it("returns true when there are 2 basic rolls", function(){
+            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
+            subject.basicRoll(4)
+            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
+            subject.basicRoll(6)
+            expect(subject.isComplete()).toBe(true)
+        })
+
+    })
+
 //     describe("getScore", function(){
 
 //         it("returns the score for the frame", function(){
