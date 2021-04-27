@@ -44,7 +44,7 @@ class Frame {
     }
 
     createNewRoll(){
-        new Roll()
+        return new Roll()
     }
 
     setRollPins(roll, pins){
