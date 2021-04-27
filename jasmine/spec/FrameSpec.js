@@ -30,6 +30,15 @@ describe("Frame", function(){
             getPins: function(){
                 return this.pins
             }
+        },
+        rollSpy4 = {
+            pins: null,
+            setPins: function(pins){
+                this.pins = pins
+            },
+            getPins: function(){
+                return this.pins
+            }
         }
     })
 
@@ -135,17 +144,32 @@ describe("Frame", function(){
 
         })
 
+        beforeEach(function(){
+            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
+            subject.basicRoll(4)
+            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
+            subject.basicRoll(6)
+        })
+
         describe("bonusRoll", function(){
 
             it("returns the roll", function(){
-                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
-                expect(subject.bonusRoll(1)).toEqual(rollSpy1)
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy3)
+                expect(subject.bonusRoll(5)).toEqual(rollSpy3)
             })
 
             it("returns the array of bonus rolls", function(){
-                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
-                subject.bonusRoll(1)
-                expect(subject.getBonusRolls()).toEqual([rollSpy1])
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy3)
+                subject.bonusRoll(4)
+                expect(subject.getBonusRolls()).toEqual([rollSpy3])
+            })
+
+            it("only adds one bonus roll after a spare", function(){
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy3)
+                subject.bonusRoll(4)
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy4)
+                subject.bonusRoll(5)
+                expect(subject.getBonusRolls()).toEqual([rollSpy3])
             })
 
         })
@@ -153,8 +177,9 @@ describe("Frame", function(){
         describe("getBonusRoll", function(){
 
             it("returns the specific bonus roll", function(){
-                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
-                expect(subject.bonusRoll(1)).toEqual(rollSpy1)
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy3)
+                subject.bonusRoll(8)
+                expect(subject.getBonusRoll(1)).toEqual(rollSpy3)
             })
 
         })
@@ -162,36 +187,42 @@ describe("Frame", function(){
         describe("getBonusRollPins", function(){
 
             it("returns the pins of that roll", function(){
-                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
-                subject.bonusRoll(1)
-                expect(subject.getBonusRollPins(1)).toEqual(1)
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy3)
+                subject.bonusRoll(5)
+                expect(subject.getBonusRollPins(1)).toEqual(5)
             })
 
         })
 
     })
 
+    describe("isSpare", function(){
 
+        it("determines a spare has been rolled", function(){
+            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
+            subject.basicRoll(4)
+            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
+            subject.basicRoll(6)
+            expect(subject.isSpare()).toBe(true)
+        })
 
-//     describe("isComplete", function(){
+        it("returns false when a spare has not been rolled", function(){
+            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
+            subject.basicRoll(4)
+            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
+            subject.basicRoll(4)
+            expect(subject.isSpare()).toBe(false)
+        })
 
-//         it("starts off incomplete", function(){
-//             expect(subject.isComplete()).toBe(false)
-//         })
+        it("sets the number of bonus rolls to be added to 1", function(){
+            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
+            subject.basicRoll(4)
+            subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
+            subject.basicRoll(6)
+            expect(subject.getNumberOfBonusRollsToBeAdded()).toEqual(1)
+        })
 
-//         it("is incomplete after 1 roll", function(){
-//             subject.roll(4)
-//             expect(subject.isComplete()).toBe(false)
-//         })
-
-//         it("is complete once there are 2 rolls", function(){
-//             subject.roll(1)
-//             expect(subject.isComplete()).toBe(false)
-//             subject.roll(2)
-//             expect(subject.isComplete()).toBe(true)
-//         })
-
-//     })
+    })
 
 //     describe("getScore", function(){
 

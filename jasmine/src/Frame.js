@@ -3,6 +3,7 @@ class Frame {
     constructor(){
         this.basicRolls = []
         this.bonusRolls = []
+        this.numberOfBonusRollsToBeAdded = 0
         this.complete = false
         this.score = null
     }
@@ -54,36 +55,44 @@ class Frame {
         var roll = this.createNewRoll()
         this.setRollPins(roll, pins)
         this.addBasicRoll(roll)
+        this.calculateNumberOfBonusRollsToBeAdded()
         return roll
     }
 
     bonusRoll(pins){
-        // Check bonus roll amount is fulfiled
-        if (this._hasOneBonusRolls()){
+        if (this.numberOfBonusRollsToBeAdded == 0){
             return
         }
         var roll = this.createNewRoll()
         this.setRollPins(roll, pins)
         this.addBonusRoll(roll)
+        this.bonusRollHasBeenAdded()
         return roll
     }
 
-    // isComplete(){
-    //     if (this._hasTwoRolls()) {
-    //         this.complete = true
-    //     }
-    //     return this.complete
-    // }
-
     _hasTwoBasicRolls(){
-        // check for strikes
         return (this.basicRolls.length == 2)
     }
 
-    _hasOneBonusRolls(){
-        // Checking for spare, need to check for strike (2 bonus rolls)
-        return (this.bonusRolls.length == 1)
+    isSpare(){
+        return (this._hasTwoBasicRolls() && (this.getBasicRollPins(1) + this.getBasicRollPins(2) == 10))
     }
+
+    calculateNumberOfBonusRollsToBeAdded(){
+        if (this.isSpare()){
+            this.numberOfBonusRollsToBeAdded = 1
+        }
+    }
+
+    getNumberOfBonusRollsToBeAdded(){
+        return this.numberOfBonusRollsToBeAdded
+    }
+
+    bonusRollHasBeenAdded(){
+        this.numberOfBonusRollsToBeAdded -= 1
+    }
+    
+    // isComplete?
 
     // getScore(){
     //     if (this.isComplete()) {
