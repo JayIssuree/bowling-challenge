@@ -6,6 +6,7 @@ class Frame {
         this.numberOfBonusRollsToBeAdded = 0
         this.basicRollsComplete = false
         this.bonusRollsComplete = null
+        this.complete = false
         this.basicRollsScore = 0
         this.bonusRollsScore = 0
         this.frameScore = 0
@@ -123,6 +124,11 @@ class Frame {
         return this.bonusRollsComplete
     }
 
+    isComplete(){
+        this.complete = (this.isBasicRollsComplete() && this.isBonusRollsComplete())
+        return this.complete
+    }
+
     getBasicRollsScore(){
         this.calculateBasicRollsScore()
         return this.basicRollsScore
@@ -162,7 +168,6 @@ class Frame {
 
     calculateFrameScore(){
         this.frameScore = (this.getBasicRollsScore() + this.getBonusRollsScore())
-        console.log(this)
     }
 
 }

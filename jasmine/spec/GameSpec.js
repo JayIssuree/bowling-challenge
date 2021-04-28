@@ -7,6 +7,11 @@ describe("Game", function(){
             frameSpy1 = {
                 basicRollsComplete: false,
                 bonusRollsComplete: null,
+                frameScore: 0,
+                complete: false,
+                isComplete(){
+                    return this.complete
+                },
                 isBasicRollsComplete(){
                     return this.basicRollsComplete
                 },
@@ -19,13 +24,18 @@ describe("Game", function(){
                 bonusRoll(pins){
                     return this
                 },
-                getScore(){
-                    return this
+                getFrameScore(){
+                    return this.frameScore
                 }
             },
             frameSpy2 = {
                 basicRollsComplete: false,
                 bonusRollsComplete: null,
+                frameScore: 0,
+                complete: false,
+                isComplete(){
+                    return this.complete
+                },
                 isBasicRollsComplete(){
                     return this.basicRollsComplete
                 },
@@ -38,13 +48,18 @@ describe("Game", function(){
                 bonusRoll(pins){
                     return this
                 },
-                getScore(){
-                    return this
+                getFrameScore(){
+                    return this.frameScore
                 }
             },
             frameSpy3 = {
                 basicRollsComplete: false,
                 bonusRollsComplete: null,
+                frameScore: 0,
+                complete: false,
+                isComplete(){
+                    return this.complete
+                },
                 isBasicRollsComplete(){
                     return this.basicRollsComplete
                 },
@@ -57,13 +72,18 @@ describe("Game", function(){
                 bonusRoll(pins){
                     return this
                 },
-                getScore(){
-                    return this
+                getFrameScore(){
+                    return this.frameScore
                 }
             },
             frameSpy4 = {
                 basicRollsComplete: false,
                 bonusRollsComplete: null,
+                frameScore: 0,
+                complete: false,
+                isComplete(){
+                    return this.complete
+                },
                 isBasicRollsComplete(){
                     return this.basicRollsComplete
                 },
@@ -76,13 +96,18 @@ describe("Game", function(){
                 bonusRoll(pins){
                     return this
                 },
-                getScore(){
-                    return this
+                getFrameScore(){
+                    return this.frameScore
                 }
             },
             frameSpy5 = {
                 basicRollsComplete: false,
                 bonusRollsComplete: null,
+                frameScore: 0,
+                complete: false,
+                isComplete(){
+                    return this.complete
+                },
                 isBasicRollsComplete(){
                     return this.basicRollsComplete
                 },
@@ -95,13 +120,18 @@ describe("Game", function(){
                 bonusRoll(pins){
                     return this
                 },
-                getScore(){
-                    return this
+                getFrameScore(){
+                    return this.frameScore
                 }
             },
             frameSpy6 = {
                 basicRollsComplete: false,
                 bonusRollsComplete: null,
+                frameScore: 0,
+                complete: false,
+                isComplete(){
+                    return this.complete
+                },
                 isBasicRollsComplete(){
                     return this.basicRollsComplete
                 },
@@ -114,13 +144,18 @@ describe("Game", function(){
                 bonusRoll(pins){
                     return this
                 },
-                getScore(){
-                    return this
+                getFrameScore(){
+                    return this.frameScore
                 }
             },
             frameSpy7 = {
                 basicRollsComplete: false,
                 bonusRollsComplete: null,
+                frameScore: 0,
+                complete: false,
+                isComplete(){
+                    return this.complete
+                },
                 isBasicRollsComplete(){
                     return this.basicRollsComplete
                 },
@@ -133,13 +168,18 @@ describe("Game", function(){
                 bonusRoll(pins){
                     return this
                 },
-                getScore(){
-                    return this
+                getFrameScore(){
+                    return this.frameScore
                 }
             },
             frameSpy8 = {
                 basicRollsComplete: false,
                 bonusRollsComplete: null,
+                frameScore: 0,
+                complete: false,
+                isComplete(){
+                    return this.complete
+                },
                 isBasicRollsComplete(){
                     return this.basicRollsComplete
                 },
@@ -152,13 +192,18 @@ describe("Game", function(){
                 bonusRoll(pins){
                     return this
                 },
-                getScore(){
-                    return this
+                getFrameScore(){
+                    return this.frameScore
                 }
             },
             frameSpy9 = {
                 basicRollsComplete: false,
                 bonusRollsComplete: null,
+                frameScore: 0,
+                complete: false,
+                isComplete(){
+                    return this.complete
+                },
                 isBasicRollsComplete(){
                     return this.basicRollsComplete
                 },
@@ -171,13 +216,18 @@ describe("Game", function(){
                 bonusRoll(pins){
                     return this
                 },
-                getScore(){
-                    return this
+                getFrameScore(){
+                    return this.frameScore
                 }
             },
             frameSpy10 = {
                 basicRollsComplete: false,
                 bonusRollsComplete: null,
+                frameScore: 0,
+                complete: false,
+                isComplete(){
+                    return this.complete
+                },
                 isBasicRollsComplete(){
                     return this.basicRollsComplete
                 },
@@ -190,8 +240,8 @@ describe("Game", function(){
                 bonusRoll(pins){
                     return this
                 },
-                getScore(){
-                    return this
+                getFrameScore(){
+                    return this.frameScore
                 }
             }
         ]
@@ -290,16 +340,45 @@ describe("Game", function(){
         })
     })
 
-    // describe("getTotalScore", function(){
+    describe("getPreviousCompleteFrames", function(){
 
-    //     it("returns the total score", function(){
-    //         spyOn(frameSpy1, "getScore").and.returnValue(8)
-    //         spyOn(frameSpy2, "getScore").and.returnValue(7)
-    //         frameSpy1.basicRollsComplete = true
-    //         frameSpy2.basicRollsComplete = true
-    //         expect(subject.getTotalScore()).toEqual(15)
-    //     })
+        it("returns an array of previous frames that are complete", function(){
+            frameSpy1.complete = true
+            frameSpy1.basicRollsComplete = true
+            frameSpy2.complete = true
+            frameSpy2.basicRollsComplete = true
+            frameSpy3.complete = true
+            frameSpy3.basicRollsComplete = true
+            frameSpy4.complete = true
+            frameSpy4.basicRollsComplete = true
+            frameSpy5.complete = true
+            frameSpy5.basicRollsComplete = true
+            expect(subject.getPreviousCompleteFrames()).toEqual([frameSpy1, frameSpy2, frameSpy3, frameSpy4, frameSpy5])
+        })
 
-    // })
+    })
+
+    describe("getTotalScore", function(){
+
+        it("returns the total score", function(){
+            frameSpy1.frameScore = 4
+            frameSpy1.basicRollsComplete = true
+            frameSpy1.complete = true
+            frameSpy2.frameScore = 18
+            frameSpy2.basicRollsComplete = true
+            frameSpy2.complete = true
+            frameSpy3.frameScore = 8
+            frameSpy3.basicRollsComplete = true
+            frameSpy3.complete = true
+            frameSpy4.frameScore = 14
+            frameSpy4.basicRollsComplete = true
+            frameSpy4.complete = true
+            frameSpy5.frameScore = 6
+            frameSpy5.basicRollsComplete = true
+            frameSpy5.complete = true
+            expect(subject.getTotalScore()).toEqual(50)
+        })
+
+    })
 
 })

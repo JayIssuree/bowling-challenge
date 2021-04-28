@@ -51,8 +51,7 @@ class Game {
     addRollToBonusRollsOfPreviousFrames(pins){
         var previousFramesThatRequireBonusRolls = this.getPreviousFramesThatRequireBonusRolls()
         for (var i = 0; i < previousFramesThatRequireBonusRolls.length; i++){
-            var frame = previousFramesThatRequireBonusRolls[i]
-            frame.bonusRoll(pins)
+            previousFramesThatRequireBonusRolls[i].bonusRoll(pins)
         }
     }
 
@@ -60,17 +59,22 @@ class Game {
         return (this.getPreviousFramesThatRequireBonusRolls().length > 0)
     }
 
-    // getTotalScore(){
-    //     this.calculateTotalScore()
-    //     return this.totalScore
-    // }
+    getPreviousCompleteFrames(){
+        var previousFramesArray = this.getPreviousFrames()
+        return previousFramesArray.filter(frame => frame.isComplete() == true)
+    }
 
-    // calculateTotalScore(){
-    //     var i = 1
-    //     do {
-    //         this.totalScore += this.getFrame(i).getScore()
-    //         i++
-    //     } while (this.getFrame(i).isComplete() == true)
-    // }
+    getTotalScore(){
+        this.calculateTotalScore()
+        return this.totalScore
+    }
+
+    calculateTotalScore(){
+        this.totalScore = 0
+        var previousCompleteFrames = this.getPreviousCompleteFrames()
+        for(var i = 0; i < previousCompleteFrames.length; i++){
+            this.totalScore += previousCompleteFrames[i].getFrameScore()
+        }
+    }
 
 }
