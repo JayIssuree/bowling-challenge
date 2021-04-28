@@ -160,7 +160,7 @@ class Frame {
     calculateBonusRollsScore(){
         this.bonusRollsScore = 0
         if (this.hasNoBonusRolls()){
-            return this.bonusRollsScore
+            return
         } else if (this.isBonusRollsComplete()){
             for (var i = 1; i <= this.bonusRolls.length; i++){
                 this.bonusRollsScore += this.getBonusRollPins(i)

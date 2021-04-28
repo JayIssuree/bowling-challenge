@@ -296,6 +296,27 @@ describe("Game", function(){
             expect(frameSpy1.basicRoll).toHaveBeenCalledWith(5)
         })
 
+        it("only calls calculateAllScores the scores once there is at least 1 completed frame", function(){
+            subject.calculateAllScores = jasmine.createSpy()
+            expect(subject.calculateAllScores).not.toHaveBeenCalled()
+        })
+
+        it("only calls calculateAllScores the scores once there is at least 1 completed frame", function(){
+            subject.calculateAllScores = jasmine.createSpy()
+            frameSpy1.frameScore = 4
+            frameSpy1.basicRollsComplete = false
+            frameSpy1.complete = false
+            expect(subject.calculateAllScores).not.toHaveBeenCalled()
+        })
+
+        it("only calls calculateAllScores the scores once there is at least 1 completed frame", function(){
+            subject.calculateAllScores = jasmine.createSpy()
+            frameSpy1.frameScore = 4
+            frameSpy1.basicRollsComplete = true
+            frameSpy1.complete = true
+            expect(subject.calculateAllScores).not.toHaveBeenCalled()
+        })
+
     })
 
     describe("getPreviousFrames", function(){
@@ -413,6 +434,33 @@ describe("Game", function(){
             frameSpy3.basicRollsComplete = true
             frameSpy3.complete = false
             expect(subject.getCumulativeScores()).toEqual([30])
+        })
+
+    })
+
+    describe("calculateAllScores", function(){
+
+        it("calls calculateTotalScore and calculateCumulativeScores", function(){
+            subject.calculateCumulativeScores = jasmine.createSpy()
+            subject.calculateTotalScore = jasmine.createSpy()
+            subject.calculateAllScores()
+            expect(subject.calculateCumulativeScores).toHaveBeenCalled()
+            expect(subject.calculateTotalScore).toHaveBeenCalled()
+        })
+
+    })
+
+    describe("hasOneCompleteFrame", function(){
+
+        it("starts off false", function(){
+            expect(subject.hasOneCompleteFrame()).toBe(false)
+        })
+
+        it("returns true once there is a complete frame", function(){
+            frameSpy1.frameScore = 4
+            frameSpy1.basicRollsComplete = true
+            frameSpy1.complete = true
+            expect(subject.hasOneCompleteFrame()).toBe(true)
         })
 
     })

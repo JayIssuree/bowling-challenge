@@ -33,6 +33,9 @@ class Game {
             this.addRollToBonusRollsOfPreviousFrames(pins)
         }
         this.currentFrame().basicRoll(pins)
+        if (this.hasOneCompleteFrame()) {
+            this.calculateAllScores()
+        }
     }
 
     getPreviousFrames(){
@@ -90,6 +93,15 @@ class Game {
     getCumulativeScores(){
         this.calculateCumulativeScores()
         return this.cumulativeScores
+    }
+
+    calculateAllScores(){
+        this.calculateCumulativeScores()
+        this.calculateTotalScore()
+    }
+
+    hasOneCompleteFrame(){
+        return this.getPreviousCompleteFrames().length > 0
     }
 
 }

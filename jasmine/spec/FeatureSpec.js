@@ -10,13 +10,13 @@ describe("Features", function(){
 
         it("saves the first roll of the game", function(){
             game.roll(2)
-            expect(game.getFrame(1).getRoll(1).getPins()).toEqual(2)
+            expect(game.getFrame(1).getBasicRollPins(1)).toEqual(2)
         })
 
         it("saves the second roll of the game", function(){
             game.roll(1)
             game.roll(2)
-            expect(game.getFrame(1).getRoll(2).getPins()).toEqual(2)
+            expect(game.getFrame(1).getBasicRollPins(2)).toEqual(2)
         })
 
     })
