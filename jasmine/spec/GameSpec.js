@@ -381,4 +381,40 @@ describe("Game", function(){
 
     })
 
+    describe("getCumulativeScores", function(){
+
+        it("returns an array of the cumulative scores", function(){
+            frameSpy1.frameScore = 4
+            frameSpy1.basicRollsComplete = true
+            frameSpy1.complete = true
+            frameSpy2.frameScore = 18
+            frameSpy2.basicRollsComplete = true
+            frameSpy2.complete = true
+            frameSpy3.frameScore = 8
+            frameSpy3.basicRollsComplete = true
+            frameSpy3.complete = true
+            frameSpy4.frameScore = 14
+            frameSpy4.basicRollsComplete = true
+            frameSpy4.complete = true
+            frameSpy5.frameScore = 6
+            frameSpy5.basicRollsComplete = true
+            frameSpy5.complete = true
+            expect(subject.getCumulativeScores()).toEqual([4, 22, 30, 44, 50])
+        })
+
+        it("does not include incomplete frames", function(){
+            frameSpy1.frameScore = 30
+            frameSpy1.basicRollsComplete = true
+            frameSpy1.complete = true
+            frameSpy2.frameScore = 20
+            frameSpy2.basicRollsComplete = true
+            frameSpy2.complete = false
+            frameSpy3.frameScore = 10
+            frameSpy3.basicRollsComplete = true
+            frameSpy3.complete = false
+            expect(subject.getCumulativeScores()).toEqual([30])
+        })
+
+    })
+
 })

@@ -3,7 +3,8 @@ class Game {
     constructor(){
         this.NUMBER_OF_FRAMES = 10;
         this.frames = [];
-        this.totalScore = 0
+        this.totalScore = 0;
+        this.cumulativeScores = [];
         this._setUpFrames();
     }
 
@@ -75,6 +76,20 @@ class Game {
         for(var i = 0; i < previousCompleteFrames.length; i++){
             this.totalScore += previousCompleteFrames[i].getFrameScore()
         }
+    }
+
+    calculateCumulativeScores(){
+        this.cumulativeScores = []
+        var previousCompleteFrames = this.getPreviousCompleteFrames()
+        this.cumulativeScores.push(previousCompleteFrames[0].getFrameScore())
+        for(var i = 1; i < previousCompleteFrames.length; i++){
+            this.cumulativeScores.push(previousCompleteFrames[i].getFrameScore() + this.cumulativeScores[i-1])
+        }
+    }
+
+    getCumulativeScores(){
+        this.calculateCumulativeScores()
+        return this.cumulativeScores
     }
 
 }
