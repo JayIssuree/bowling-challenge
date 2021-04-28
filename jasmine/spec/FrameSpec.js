@@ -144,6 +144,18 @@ describe("Frame", function(){
 
         })
 
+        describe("hasNoBonusRolls", function(){
+
+            it("returns true when there are no bonus rolls to be added", function(){
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy1)
+                subject.basicRoll(4)
+                subject.createNewRoll = jasmine.createSpy().and.returnValue(rollSpy2)
+                subject.basicRoll(5)
+                expect(subject.hasNoBonusRolls()).toBe(true)
+            })
+
+        })
+
         describe("isSpare", function(){
 
             beforeEach(function(){

@@ -107,6 +107,10 @@ class Frame {
     requiresBonusRollToBeAdded(){
         return this.numberOfBonusRollsToBeAdded > 0
     }
+
+    hasNoBonusRolls(){
+        return (this.isBonusRollsComplete() && this.bonusRolls.length == 0)
+    }
     
     isBasicRollsComplete(){
         if (this._hasTwoBasicRolls() || this.isStrike()) {
@@ -147,22 +151,20 @@ class Frame {
     calculateBasicRollsScore(){
         this.basicRollsScore = 0
         if (this.isBasicRollsComplete()){
-            var i = 1
-            do {
+            for (var i = 1; i <= this.basicRolls.length; i++){
                 this.basicRollsScore += this.getBasicRollPins(i)
-                i++
-            } while (i <= this.basicRolls.length)
+            }
         }
     }
 
     calculateBonusRollsScore(){
         this.bonusRollsScore = 0
-        if (this.isBonusRollsComplete()){
-            var i = 1
-            do {
+        if (this.hasNoBonusRolls()){
+            return this.bonusRollsScore
+        } else if (this.isBonusRollsComplete()){
+            for (var i = 1; i <= this.bonusRolls.length; i++){
                 this.bonusRollsScore += this.getBonusRollPins(i)
-                i++
-            } while (i <= this.bonusRolls.length)
+            }
         }
     }
 
