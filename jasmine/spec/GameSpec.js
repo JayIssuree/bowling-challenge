@@ -465,4 +465,15 @@ describe("Game", function(){
 
     })
 
+    describe("getFramesWhereBasicRollsAreComplete", function(){
+
+        it("returns an array of frames that have completed their basic rolls", function(){
+            frameSpy1.basicRollsComplete = true
+            frameSpy2.basicRollsComplete = true
+            frameSpy3.basicRollsComplete = true
+            expect(subject.getFramesWhereBasicRollsAreComplete()).toEqual([frameSpy1, frameSpy2, frameSpy3])
+        })
+
+    })
+
 })

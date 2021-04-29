@@ -5,7 +5,12 @@ class Game {
         this.frames = [];
         this.totalScore = 0;
         this.cumulativeScores = [];
+        this.scorecard = new Scorecard()
         this._setUpFrames();
+    }
+
+    getScorecard(){
+        return this.scorecard
     }
 
     _setUpFrames(){
@@ -102,6 +107,11 @@ class Game {
 
     hasOneCompleteFrame(){
         return this.getPreviousCompleteFrames().length > 0
+    }
+
+    getFramesWhereBasicRollsAreComplete(){
+        var FramesArray = this.frames
+        return FramesArray.filter(frame => frame.isBasicRollsComplete())
     }
 
 }
