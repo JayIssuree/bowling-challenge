@@ -38,6 +38,7 @@ $(document).ready(function () {
         pinButton = document.createElement('button')
         pinButton.innerHTML = i
         pinButton.className = `pin${i}`
+        pinButton.setAttribute('value', i)
         rollsDiv.appendChild(pinButton)
       }
       $(rollsDiv).appendTo("body")
@@ -47,8 +48,9 @@ $(document).ready(function () {
       createPins()
     }
 
-    // function updateBasicRolls(){
-    // }
+    $('.pinsToRoll').on('click', '*', function(){
+      game.roll(Number(this.value))
+    })
   
   });
   
