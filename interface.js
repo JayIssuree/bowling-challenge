@@ -16,7 +16,7 @@ $(document).ready(function () {
       table.appendChild(frameNumber)
       table.appendChild(frameScores)
       tableDiv.appendChild(table)
-      $(tableDiv).appendTo("body")
+      $(tableDiv).prependTo("body")
     }
 
     function insertFrameNumbersIntoTable(){
@@ -51,6 +51,10 @@ $(document).ready(function () {
       createPins()
     }
 
+    function updateTotalScore() {
+      $(document).find(".totalScore").text(game.getTotalScore())
+    }
+
     $('.pinsToRoll').on('click', '*', function(){
       var val = Number(this.value)
       if (isStrike(val)) {
@@ -61,6 +65,7 @@ $(document).ready(function () {
         insertIntoRollScore(val)
       }
       game.roll(val)
+      updateTotalScore()
     })
 
     function insertIntoRollScore(val){
