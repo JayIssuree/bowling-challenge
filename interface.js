@@ -59,13 +59,19 @@ $(document).ready(function () {
       var val = Number(this.value)
       if (isStrike(val)) {
         insertStrike()
-      } else if (isSpare(val)) {
-        insertSpare()
+        game.roll(val)
+        updateTotalScore()
+        return
       } else {
+        game.roll(val)
+        if (game.getFramesWhereBasicRollsAreComplete()[game.getFramesWhereBasicRollsAreComplete().length -1] != undefined && game.getFramesWhereBasicRollsAreComplete()[game.getFramesWhereBasicRollsAreComplete().length -1].isSpare() && game.currentFrame().getBasicRolls().length == 0) {
+          insertSpare()
+          updateTotalScore()
+          return
+        }
         insertIntoRollScore(val)
-      }
-      game.roll(val)
-      updateTotalScore()
+        updateTotalScore()
+      } 
     })
 
     function insertIntoRollScore(val){
@@ -85,6 +91,7 @@ $(document).ready(function () {
     }
 
     function isSpare(justRolled){
+      return game.currentFrame().isSpare()
       return justRolled + Number($("table:first tr:last td:last").text()) == 10
     }
 
