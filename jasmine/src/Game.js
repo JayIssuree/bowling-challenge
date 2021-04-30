@@ -5,12 +5,7 @@ class Game {
         this.frames = [];
         this.totalScore = 0;
         this.cumulativeScores = [];
-        this.scorecard = new Scorecard()
         this._setUpFrames();
-    }
-
-    getScorecard(){
-        return this.scorecard
     }
 
     _setUpFrames(){

@@ -52,27 +52,39 @@ $(document).ready(function () {
     }
 
     $('.pinsToRoll').on('click', '*', function(){
-      game.roll(Number(this.value))
-      updateBasicRolls()
+      var val = Number(this.value)
+      if (isStrike(val)) {
+        insertStrike()
+      } else if (isSpare(val)) {
+        insertSpare()
+      } else {
+        insertIntoRollScore(val)
+      }
+      game.roll(val)
     })
 
-    function updateBasicRolls(){
-      previousFrames = game.getFramesWhereBasicRollsAreComplete()
-      var previousFrame = previousFrames[previousFrames.length - 1]
-      if (previousFrame == undefined) {
-        return
-      } else if (game.currentFrame().getBasicRolls().length < 1) {
-        var frameScore = game.getScorecard().translateFrameToScore(previousFrame)
-        insertScoreIntoScorecard(frameScore)
-      }
+    function insertIntoRollScore(val){
+      score = document.createElement('td')
+      score.innerHTML = val
+      score.setAttribute('value', val)
+      $(score).appendTo(".frameScores")
     }
 
-    function insertScoreIntoScorecard(frameScore){
-      for (var i = 0; i < frameScore.length; i++){
-        score = document.createElement('td')
-        score.innerHTML = frameScore[i]
-        $(score).appendTo(".frameScores")
-      }
+    function isStrike(val){
+      return val == 10
+    }
+
+    function insertStrike(){
+        insertIntoRollScore('-')
+        insertIntoRollScore('X')
+    }
+
+    function isSpare(justRolled){
+      return justRolled + Number($("table tr:last td:last").text()) == 10
+    }
+
+    function insertSpare(){
+      insertIntoRollScore('/')
     }
   
   });
