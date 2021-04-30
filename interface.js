@@ -18,6 +18,25 @@ $(document).ready(function () {
       tableDiv.appendChild(table)
       $(tableDiv).prependTo("body")
     }
+    
+    function resetCumulativeScores(){
+      $(".cumulativeScores").remove()
+      var cumulativeScores = document.createElement('tr')
+      cumulativeScores.className = "cumulativeScores"
+      $(cumulativeScores).appendTo(".scorecard")
+    }
+
+    function updateCumulativeScores(){
+      resetCumulativeScores()
+      var cumulativeScores = game.getCumulativeScores()
+      for(var i = 0; i < cumulativeScores.length; i++) {
+        score = cumulativeScores[i]
+        cumulativeScoreTd = document.createElement('td')
+        cumulativeScoreTd.setAttribute('colspan', 2)
+        cumulativeScoreTd.innerHTML = score
+        $(cumulativeScoreTd).appendTo(".cumulativeScores")
+      }
+    }
 
     function insertFrameNumbersIntoTable(){
       var frames = game.getFrames()
@@ -61,16 +80,19 @@ $(document).ready(function () {
         insertStrike()
         game.roll(val)
         updateTotalScore()
+        updateCumulativeScores()
         return
       } else {
         game.roll(val)
         if (isSpare()) {
           insertSpare()
           updateTotalScore()
+          updateCumulativeScores()
           return
         }
         insertIntoRollScore(val)
         updateTotalScore()
+        updateCumulativeScores()
       } 
     })
 
