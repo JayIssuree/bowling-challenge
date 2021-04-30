@@ -85,7 +85,7 @@ $(document).ready(function () {
     }
 
     function isSpare(justRolled){
-      return justRolled + Number($("table tr:last td:last").text()) == 10
+      return justRolled + Number($("table:first tr:last td:last").text()) == 10
     }
 
     function insertSpare(){
