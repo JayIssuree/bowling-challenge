@@ -64,7 +64,7 @@ $(document).ready(function () {
         return
       } else {
         game.roll(val)
-        if (game.getFramesWhereBasicRollsAreComplete()[game.getFramesWhereBasicRollsAreComplete().length -1] != undefined && game.getFramesWhereBasicRollsAreComplete()[game.getFramesWhereBasicRollsAreComplete().length -1].isSpare() && game.currentFrame().getBasicRolls().length == 0) {
+        if (isSpare()) {
           insertSpare()
           updateTotalScore()
           return
@@ -90,9 +90,10 @@ $(document).ready(function () {
         insertIntoRollScore('X')
     }
 
-    function isSpare(justRolled){
-      return game.currentFrame().isSpare()
-      return justRolled + Number($("table:first tr:last td:last").text()) == 10
+    function isSpare(){
+      previousFrames = game.getFramesWhereBasicRollsAreComplete()
+      var previousFrame = previousFrames[previousFrames.length -1]
+      return (previousFrame != undefined && previousFrame.isSpare() && game.currentFrame().getBasicRolls().length == 0)
     }
 
     function insertSpare(){
