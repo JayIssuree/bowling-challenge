@@ -56,7 +56,7 @@ $(document).ready(function () {
     function createPins(){
       rollsDiv = document.createElement('div')
       rollsDiv.className = 'pinsToRoll'
-      for (var i = 1; i <= 10; i++){
+      for (var i = 0; i <= 10; i++){
         pinButton = document.createElement('button')
         pinButton.innerHTML = i
         pinButton.className = `pin${i}`
